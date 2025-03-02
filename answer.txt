@@ -1,0 +1,18 @@
+6.1:
+Khi chọn vào phím cancel thì có một Dialog bật ra với nội dung: "You've chosen:No"
+Bởi vì: Khi nhấn vào cancel thì biến option sẽ được gán giá trị JOptionPane.CANCEL_OPTION, trong khi đó, chương trình này muốn kiểm tra xem nhười dùng có chọn "Yes" hay không, nên khi chọn "Cancel" (Không chọn vào "Yes") thì chương trình sẽ mặc định lựa chọn là "No".
+
+6.2 
+Nếu muốn custom lựa chọn của người dùng chỉ còn 2 lựa chọn là "Yes" hoặc "No", ta có thể thực hiện như sau:
+
+import javax.swing.JOptionPane;
+
+public class ChoosingOption {
+    public static void main(String[] args) {
+        Object[] options = {"Yes", "No"};
+        int option = JOptionPane.showOptionDialog(null, "Do you want to change the first class ticket?", "Choose an option", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        JOptionPane.showMessageDialog(null, "You've chosen: " + options[option]);
+    }
+}
+
+Sử dụng phuong thức showOptionDialog(Component, Object, String, int, int, Icon, Object[], Object) để custom 2 lựa chọn "Yes" và "No"
