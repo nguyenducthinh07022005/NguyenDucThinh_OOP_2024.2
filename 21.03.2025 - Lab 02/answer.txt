@@ -34,12 +34,12 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        int x = 'z';
-        printValue(a);        
+        int y = 'z';
+        printValue(y);        
     }
 }
 
-=> Biến x trong main vẫn có giá trị là z vì phương thức printValue(char x) chỉ làm việc với bản sao của x trong main().
+=> Biến y trong main vẫn có giá trị là z vì phương thức printValue(char x) chỉ làm việc với bản sao của yy trong main().
 
 2. Với kiểu đối tượng (Object types, như String, Array, Class...):
 •	Khi truyền một đối tượng vào phương thức, Java cũng truyền theo cơ chế Pass by Value.
@@ -70,10 +70,10 @@ public class Test {
         DigitalVideoDisc dvd2 = new DigitalVideoDisc("Cinderella");
 
         changeTitle(dvd1, "New Jungle");
-        System.out.println(dvd1.title); // Kết quả: "New Jungle"
+        System.out.println(dvd1.title);
 
         swap(dvd1, dvd2);
-        System.out.println(dvd1.title); // Kết quả vẫn là "New Jungle"
+        System.out.println(dvd1.title);
     }
 }
 
@@ -81,7 +81,7 @@ public class Test {
  - Trong phương thức swap(), mặc dù ta hoán đổi hai tham chiếu bên trong phương thức, nhưng nó không ảnh hưởng đến tham chiếu gốc trong main().
 
 3. After the call of swap(jungleDVD, cinderellaDVD) why does the title of these two objects still remain?
-     Java sử dụng Pass by Value, kể cả khi truyền tham chiếu của đối tượng. Khi bạn gọi swap(jungleDVD, cinderellaDVD), bạn chỉ truyền bản sao của tham chiếu (tức là địa chỉ bộ nhớ của đối tượng). Bất kỳ thay đổi nào trong phương thức chỉ áp dụng cho bản sao đó và không ảnh hưởng đến tham chiếu gốc trong main().
+     Như đã trả lời ở trên, Java sử dụng Pass by Value, kể cả khi truyền tham chiếu của đối tượng. Khi bạn gọi swap(jungleDVD, cinderellaDVD), bạn chỉ truyền bản sao của tham chiếu (tức là địa chỉ bộ nhớ của đối tượng). Bất kỳ thay đổi nào trong phương thức chỉ áp dụng cho bản sao đó và không ảnh hưởng đến giá trị gốc trong main().
 Ví dụ:
 class DigitalVideoDisc {
     String title;
