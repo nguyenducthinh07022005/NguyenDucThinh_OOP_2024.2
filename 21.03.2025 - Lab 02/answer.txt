@@ -82,7 +82,6 @@ public class Test {
 
 3. After the call of swap(jungleDVD, cinderellaDVD) why does the title of these two objects still remain?
      Như đã trả lời ở trên, Java sử dụng Pass by Value, kể cả khi truyền tham chiếu của đối tượng. Khi bạn gọi swap(jungleDVD, cinderellaDVD), bạn chỉ truyền bản sao của tham chiếu (tức là địa chỉ bộ nhớ của đối tượng). Bất kỳ thay đổi nào trong phương thức chỉ áp dụng cho bản sao đó và không ảnh hưởng đến giá trị gốc trong main().
-Ví dụ:
 class DigitalVideoDisc {
     String title;
 
@@ -108,7 +107,7 @@ public class Test {
         System.out.println("cinderellaDVD: " + cinderellaDVD.title); // Kết quả: "Cinderella"
     }
 }
-
+-> Kết luận lại: 
 -  jungleDVD trỏ đến đối tượng "Jungle", cinderellaDVD trỏ đến "Cinderella".
 -  Khi gọi swap(jungleDVD, cinderellaDVD), Java tạo bản sao của hai tham chiếu d1 và d2.
 -  Trong phương thức swap(), d1 và d2 bị hoán đổi, nhưng chỉ áp dụng với bản sao của tham chiếu, không ảnh hưởng đến jungleDVD và cinderellaDVD trong main().
@@ -117,7 +116,6 @@ public class Test {
 
 4. After the call of changeTitle(jungleDVD, cinderellaDVD.getTitle()) why is the title of the JungleDVD changed?
      Trong phương thức changeTitle(), thay vì gán lại tham chiếu mới, ta đang thay đổi thuộc tính bên trong đối tượng. Do đó, thay đổi này có hiệu lực ngay cả bên ngoài phương thức.
-Ví dụ:
 class DigitalVideoDisc {
     String title;
 
@@ -142,6 +140,7 @@ public class Test {
     }
 }
 
+-> Kết luận lại:
 -  jungleDVD trỏ đến đối tượng "Jungle", cinderellaDVD trỏ đến "Cinderella".
 -  Khi gọi changeTitle(jungleDVD, cinderellaDVD.title), ta truyền tham chiếu của jungleDVD và một bản sao của chuỗi "Cinderella".
 -  Trong changeTitle(), lệnh dvd.title = newTitle; thay đổi thuộc tính title của jungleDVD.
