@@ -1,0 +1,147 @@
+1. If you create a constructor method to build a DVD by title then create a constructor method to build a DVD by category. Does JAVA allow you to do this?
+Trả lời:
+     Có, bởi vì Java hỗ trợ nạp chồng (overloading) phương thức khởi tạo (constructor overloading).
+Tức là mình có thể tạo nhiều constructor trong cùng một lớp, với điều kiện là danh sách tham số của các phương thưc là khác nhau khác nhau.
+* Ví dụ có đoạn code sau:
+public class Cart {
+     //Tham số truyền vào là mảng dvdList
+     public void addDigitalVideoDisc(DigitalVideoDisc[] dvdList) {
+		for(DigitalVideoDisc dvd : dvdList) {
+			addDigitalVideoDisc(dvd);
+		}
+	}
+	//Tham số truyền vào là 2 đĩa à dvd1 và dvd2
+	public void addDigitalVideoDisc(DigitalVideoDisc dvd1, DigitalVideoDisc dvd2) {
+	    addDigitalVideoDisc(dvd1);
+	    addDigitalVideoDisc(dvd2);
+	}
+}
+
+Ở đây, cùng có tên là addDigitalVideoDisc nhưng có danh sách tham số khác nhau, nên Java sẽ biết cách gọi constructor phù hợp dựa trên tham số truyền vào.
+
+2. Is JAVA a Pass by Value or a Pass by Reference programming language?
+Trả lời:
+     Java luôn là ngôn ngữ Pass by Value. Điều này có nghĩa là khi bạn truyền một biến vào một phương thức, Java sẽ truyền một bản sao của giá trị của biến đó, chứ không phải tham chiếu trực tiếp đến biến gốc.
+Cụ thể:
+1.	Với kiểu dữ liệu nguyên thủy (primitive types):
+o	Khi truyền một giá trị kiểu int, double, char, boolean,... thì Java sẽ tạo một bản sao của giá trị đó và truyền cho phương thức.
+o	Khi phương thức thay đổi giá trị của biến này, nó chỉ ảnh hưởng đến bản sao, không ảnh hưởng đến giá trị gốc.
+
+public class Test {
+    public static void printValue(char x) {
+          x = 'a';
+          System.out.println(a);
+    }
+
+    public static void main(String[] args) {
+        int y = 'z';
+        printValue(y);        
+    }
+}
+
+=> Biến y trong main vẫn có giá trị là z vì phương thức printValue(char x) chỉ làm việc với bản sao của yy trong main().
+
+2. Với kiểu đối tượng (Object types, như String, Array, Class...):
+•	Khi truyền một đối tượng vào phương thức, Java cũng truyền theo cơ chế Pass by Value.
+•	Nhưng giá trị được truyền đi chính là tham chiếu (reference) của đối tượng, chứ không phải bản sao của toàn bộ đối tượng.
+•	Điều này có nghĩa là nếu bạn thay đổi thuộc tính bên trong đối tượng, thì đối tượng gốc cũng sẽ thay đổi.
+•	Tuy nhiên, nếu bạn gán tham chiếu đó sang một đối tượng mới, nó sẽ không ảnh hưởng đến đối tượng ban đầu.
+class DigitalVideoDisc {
+    String title;
+
+    DigitalVideoDisc(String title) {
+        this.title = title;
+    }
+}
+
+public class Test {
+    public static void changeTitle(DigitalVideoDisc dvd, String newTitle) {
+        dvd.title = newTitle; // Thay đổi thuộc tính bên trong đối tượng
+    }
+
+    public static void swap(DigitalVideoDisc d1, DigitalVideoDisc d2) {
+        DigitalVideoDisc temp = d1;
+        d1 = d2;
+        d2 = temp;
+    }
+
+    public static void main(String[] args) {
+        DigitalVideoDisc dvd1 = new DigitalVideoDisc("Jungle");
+        DigitalVideoDisc dvd2 = new DigitalVideoDisc("Cinderella");
+
+        changeTitle(dvd1, "New Jungle");
+        System.out.println(dvd1.title);
+
+        swap(dvd1, dvd2);
+        System.out.println(dvd1.title);
+    }
+}
+
+- Trong phương thức changeTitle(), nội dung của đối tượng dvd1 bị thay đổi vì ta đang chỉnh sửa thuộc tính bên trong của đối tượng.
+ - Trong phương thức swap(), mặc dù ta hoán đổi hai tham chiếu bên trong phương thức, nhưng nó không ảnh hưởng đến tham chiếu gốc trong main().
+
+3. After the call of swap(jungleDVD, cinderellaDVD) why does the title of these two objects still remain?
+     Như đã trả lời ở trên, Java sử dụng Pass by Value, kể cả khi truyền tham chiếu của đối tượng. Khi bạn gọi swap(jungleDVD, cinderellaDVD), bạn chỉ truyền bản sao của tham chiếu (tức là địa chỉ bộ nhớ của đối tượng). Bất kỳ thay đổi nào trong phương thức chỉ áp dụng cho bản sao đó và không ảnh hưởng đến giá trị gốc trong main().
+class DigitalVideoDisc {
+    String title;
+
+    DigitalVideoDisc(String title) {
+        this.title = title;
+    }
+}
+
+public class Test {
+    public static void swap(DigitalVideoDisc d1, DigitalVideoDisc d2) {
+        DigitalVideoDisc temp = d1;
+        d1 = d2;
+        d2 = temp;
+    }
+
+    public static void main(String[] args) {
+        DigitalVideoDisc jungleDVD = new DigitalVideoDisc("Jungle");
+        DigitalVideoDisc cinderellaDVD = new DigitalVideoDisc("Cinderella");
+
+        swap(jungleDVD, cinderellaDVD);
+        
+        System.out.println("jungleDVD: " + jungleDVD.title); // Kết quả: "Jungle"
+        System.out.println("cinderellaDVD: " + cinderellaDVD.title); // Kết quả: "Cinderella"
+    }
+}
+-> Kết luận lại: 
+-  jungleDVD trỏ đến đối tượng "Jungle", cinderellaDVD trỏ đến "Cinderella".
+-  Khi gọi swap(jungleDVD, cinderellaDVD), Java tạo bản sao của hai tham chiếu d1 và d2.
+-  Trong phương thức swap(), d1 và d2 bị hoán đổi, nhưng chỉ áp dụng với bản sao của tham chiếu, không ảnh hưởng đến jungleDVD và cinderellaDVD trong main().
+-  Khi thoát khỏi swap(), các thay đổi biến mất và jungleDVD vẫn trỏ đến "Jungle", cinderellaDVD vẫn trỏ đến "Cinderella".
+
+
+4. After the call of changeTitle(jungleDVD, cinderellaDVD.getTitle()) why is the title of the JungleDVD changed?
+     Trong phương thức changeTitle(), thay vì gán lại tham chiếu mới, ta đang thay đổi thuộc tính bên trong đối tượng. Do đó, thay đổi này có hiệu lực ngay cả bên ngoài phương thức.
+class DigitalVideoDisc {
+    String title;
+
+    DigitalVideoDisc(String title) {
+        this.title = title;
+    }
+}
+
+public class Test {
+    public static void changeTitle(DigitalVideoDisc dvd, String newTitle) {
+        dvd.title = newTitle; // Thay đổi thuộc tính bên trong đối tượng
+    }
+
+    public static void main(String[] args) {
+        DigitalVideoDisc jungleDVD = new DigitalVideoDisc("Jungle");
+        DigitalVideoDisc cinderellaDVD = new DigitalVideoDisc("Cinderella");
+
+        changeTitle(jungleDVD, cinderellaDVD.title);
+
+        System.out.println("jungleDVD: " + jungleDVD.title); // Kết quả: "Cinderella"
+        System.out.println("cinderellaDVD: " + cinderellaDVD.title); // Kết quả: "Cinderella"
+    }
+}
+
+-> Kết luận lại:
+-  jungleDVD trỏ đến đối tượng "Jungle", cinderellaDVD trỏ đến "Cinderella".
+-  Khi gọi changeTitle(jungleDVD, cinderellaDVD.title), ta truyền tham chiếu của jungleDVD và một bản sao của chuỗi "Cinderella".
+-  Trong changeTitle(), lệnh dvd.title = newTitle; thay đổi thuộc tính title của jungleDVD.
+-  Kết quả là jungleDVD.title được cập nhật thành "Cinderella", trong khi cinderellaDVD.title vẫn giữ nguyên.
